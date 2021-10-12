@@ -1,11 +1,27 @@
 from getpass import getpass
-from dns.resolver import query
 from mysql.connector import connect, Error
 import pandas as pd
 
-df = pd.read_csv('df_coin4.csv', index_col=False, delimiter=',')
+upload_dir = 'C:/Users/Dee/root/Projects/personal_real_projects/becoming_data_engineer/coindecko/'
+
+df = pd.read_csv(upload_dir + 'data/df.csv', index_col=False, delimiter=',')
 
 print(df.head())
+
+### Create connection
+try:
+    with connect(
+        host="localhost",
+        user=input("Enter Username: "),
+        password=getpass("Enter password: ")
+    ) as connection:
+        if connection.is_connected():
+            cursor = connection.cursor()
+            cursor.execute("DROP DATABASE IF EXISTS coindeck_db;")
+            cursor.execute("CREATE DATABASE coindeck_db;")
+            print("Database is created")
+except Error as e:
+    print("Error while connecting to MySQL", e)
 
 
 create_crypto_asset_table_query = """
@@ -13,14 +29,15 @@ CREATE table crypto_asset(
     id INT(64) NOT NULL AUTO_INCREMENT,
     crypto_id VARCHAR(255),
     crypto_name VARCHAR(255),
-    current_price NUMERIC(15, 2),
-    total_volume_24h NUMERIC(30, 2),
+    current_price NUMERIC(30,2),
+    total_volume_24h NUMERIC(30,2),
     market_cap NUMERIC(30, 2),
     last_update VARCHAR(255),
     PRIMARY KEY (id)
 );
 """
 
+## Create another connection
 
 try:
     with connect(
