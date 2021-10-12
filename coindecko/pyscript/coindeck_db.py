@@ -1,7 +1,10 @@
 from getpass import getpass
 from mysql.connector import connect, Error
 import pandas as pd
+import os
 
+MyPASS = os.environ.get('MyPASS')
+print(MyPASS)
 upload_dir = 'C:/Users/Dee/root/Projects/personal_real_projects/becoming_data_engineer/coindecko/'
 
 df = pd.read_csv(upload_dir + 'data/df.csv', index_col=False, delimiter=',')
@@ -11,9 +14,9 @@ print(df.head())
 ### Create connection
 try:
     with connect(
-        host="localhost",
-        user=input("Enter Username: "),
-        password=getpass("Enter password: ")
+        host='localhost',
+        user='root',
+        password=MyPASS
     ) as connection:
         if connection.is_connected():
             cursor = connection.cursor()
@@ -41,9 +44,9 @@ CREATE table crypto_asset(
 
 try:
     with connect(
-        host="localhost",
-        user=input("Enter username: "),
-        password=getpass("Enter password: "),
+        host='localhost',
+        user='root',
+        password=MyPASS,
         database = "coindecko_db"
     ) as connection:
         if connection.is_connected():
