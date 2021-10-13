@@ -1,9 +1,9 @@
 
 import pandas as pd
 
-upload_dir = 'C:/Users/Dee/root/Projects/personal_real_projects/becoming_data_engineer/coindecko/'
+upload_dir = 'data/'
 
-df_coin = pd.read_csv(upload_dir + 'data/df_coin_data.csv')
+df_coin = pd.read_csv(upload_dir + 'df_coin_data.csv')
 
 
 spec_chars = ["!",'"',"#","%","&","'","(",")",

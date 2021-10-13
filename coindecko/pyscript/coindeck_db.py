@@ -5,9 +5,9 @@ import os
 
 MyPASS = os.environ.get('MyPASS')
 print(MyPASS)
-upload_dir = 'C:/Users/Dee/root/Projects/personal_real_projects/becoming_data_engineer/coindecko/'
+upload_dir = 'data/'
 
-df = pd.read_csv(upload_dir + 'data/df.csv', index_col=False, delimiter=',')
+df = pd.read_csv(upload_dir + 'df.csv', index_col=False, delimiter=',')
 
 print(df.head())
 

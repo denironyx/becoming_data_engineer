@@ -1,9 +1,5 @@
-import requests
-from bs4 import BeautifulSoup
+import pandas as pd
 
-url = 'https://www.coingecko.com/en/coins/all'
+df = pd.read_json('/data/coindecko.json')
 
-soup = BeautifulSoup(requests.get(url).content, 'html.parser')
-
-table_cd = soup.find_all(class_="td")
-print(table_cd.prettify())
+print(df.head())

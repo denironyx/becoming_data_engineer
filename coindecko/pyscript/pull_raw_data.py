@@ -32,6 +32,6 @@ while True:
 df_coin = pd.DataFrame(json_df, columns=['id', 'name', 'current_price', 'total_volume', 'market_cap', 'last_updated'])
 # Output file
    # write out
-upload_dir = 'C:/Users/Dee/root/Projects/personal_real_projects/becoming_data_engineer/coindecko/'
+upload_dir = 'data/'
 
-df_coin.to_csv(upload_dir + "data/df_coin_data.csv", index=False)
+df_coin.to_csv(upload_dir + "df_coin_data.csv", index=False)
