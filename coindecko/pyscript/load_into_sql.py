@@ -11,7 +11,7 @@ df = pd.read_csv(upload_dir + 'df.csv', index_col=False, delimiter=',')
 
 print(df.head())
 
-### Create connection
+### Create the first connection
 try:
     with connect(
         host='localhost',
@@ -26,7 +26,7 @@ try:
 except Error as e:
     print("Error while connecting to MySQL", e)
 
-
+## Create a table
 create_crypto_asset_table_query = """
 CREATE table crypto_asset(
     id INT(64) NOT NULL AUTO_INCREMENT,
@@ -41,7 +41,6 @@ CREATE table crypto_asset(
 """
 
 ## Create another connection
-
 try:
     with connect(
         host='localhost',
@@ -66,4 +65,3 @@ try:
                 connection.commit() 
 except Error as e:
     print("Error while connecting to Mysql", e)
-
