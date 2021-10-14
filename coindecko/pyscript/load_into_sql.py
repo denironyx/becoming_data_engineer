@@ -20,8 +20,8 @@ try:
     ) as connection:
         if connection.is_connected():
             cursor = connection.cursor()
-            cursor.execute("DROP DATABASE IF EXISTS coindeck_db;")
-            cursor.execute("CREATE DATABASE coindeck_db;")
+            cursor.execute("DROP DATABASE IF EXISTS coingecko_db;")
+            cursor.execute("CREATE DATABASE coingecko_db;")
             print("Database is created")
 except Error as e:
     print("Error while connecting to MySQL", e)
@@ -36,6 +36,7 @@ CREATE table crypto_asset(
     total_volume_24h NUMERIC(30,2),
     market_cap NUMERIC(30, 2),
     last_update VARCHAR(255),
+    created_on DATETIME NOT NULL DEFAULT NOW(),
     PRIMARY KEY (id)
 );
 """
@@ -46,7 +47,7 @@ try:
         host='localhost',
         user='root',
         password=MyPASS,
-        database = "coindecko_db"
+        database = "coingecko_db"
     ) as connection:
         if connection.is_connected():
             cursor = connection.cursor()
@@ -59,7 +60,7 @@ try:
             print("Table is created...")
             ## loop through the data frame
             for i,row in df.iterrows():
-                insert_query = "INSERT INTO coindecko_db.crypto_asset(crypto_id, crypto_name, current_price, total_volume_24h, market_cap, last_update) VALUES (%s,%s,%s,%s,%s,%s)"
+                insert_query = "INSERT INTO coingecko_db.crypto_asset(crypto_id, crypto_name, current_price, total_volume_24h, market_cap, last_update) VALUES (%s,%s,%s,%s,%s,%s)"
                 cursor.execute(insert_query, tuple(row)) 
                 print("Record inserted")
                 connection.commit() 
