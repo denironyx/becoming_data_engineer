@@ -3,7 +3,7 @@ from mysql.connector import connect, Error
 import pandas as pd
 import os
 
-MyPASS = os.environ.get('MyPASS')
+MyPASS = os.environ.get('MyPASS') ## set your password 
 print(MyPASS)
 upload_dir = 'data/'
 
@@ -16,7 +16,7 @@ try:
     with connect(
         host='localhost',
         user='root',
-        password=MyPASS
+        password=MyPASS # change the password here
     ) as connection:
         if connection.is_connected():
             cursor = connection.cursor()
