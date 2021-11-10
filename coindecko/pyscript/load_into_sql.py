@@ -1,9 +1,8 @@
-from getpass import getpass
 from mysql.connector import connect, Error
 import pandas as pd
 import os
 
-MyPASS = os.environ.get('MyPASS') ## set your password 
+MyPASS = os.environ.get('MyPASS')  # set your password
 print(MyPASS)
 upload_dir = 'data/'
 
@@ -11,12 +10,12 @@ df = pd.read_csv(upload_dir + 'df.csv', index_col=False, delimiter=',')
 
 print(df.head())
 
-### Create the first connection
+# Create the first connection
 try:
     with connect(
-        host='localhost',
-        user='root',
-        password=MyPASS # change the password here
+            host='localhost',
+            user='root',
+            password=MyPASS  # change the password here
     ) as connection:
         if connection.is_connected():
             cursor = connection.cursor()
@@ -26,8 +25,7 @@ try:
 except Error as e:
     print("Error while connecting to MySQL", e)
 
-
-## Create a table
+# Create a table
 create_crypto_asset_table_query = """
 CREATE table crypto_asset(
     id INT(64) NOT NULL AUTO_INCREMENT,
@@ -42,13 +40,13 @@ CREATE table crypto_asset(
 );
 """
 
-## Create another connection
+# Create another connection
 try:
     with connect(
-        host=MyPASS,
-        user='root',
-        password="Met/14/7472",
-        database = "coingecko_db"
+            host='localhost',
+            user='root',
+            password=MyPASS,
+            database="coingecko_db"
     ) as connection:
         if connection.is_connected():
             cursor = connection.cursor()
@@ -57,13 +55,14 @@ try:
             print("You're connected to database: ", record)
             cursor.execute("DROP TABLE IF EXISTS crypto_asset;")
             print('Creating table....')
-            cursor.execute(create_crypto_asset_table_query) 
+            cursor.execute(create_crypto_asset_table_query)
             print("Table is created...")
-            ## loop through the data frame
-            for i,row in df.iterrows():
-                insert_query = "INSERT INTO coingecko_db.crypto_asset(crypto_id, crypto_name, current_price, total_volume_24h, market_cap, last_update) VALUES (%s,%s,%s,%s,%s,%s)"
-                cursor.execute(insert_query, tuple(row)) 
+            # loop through the data frame
+            for i, row in df.iterrows():
+                insert_query = "INSERT INTO coingecko_db.crypto_asset(crypto_id, crypto_name, current_price, " \
+                               "total_volume_24h, market_cap, last_update) VALUES (%s,%s,%s,%s,%s,%s) "
+                cursor.execute(insert_query, tuple(row))
                 print("Record inserted")
-                connection.commit() 
+                connection.commit()
 except Error as e:
     print("Error while connecting to Mysql", e)
