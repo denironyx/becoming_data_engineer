@@ -26,15 +26,16 @@ try:
 except Error as e:
     print("Error while connecting to MySQL", e)
 
+
 ## Create a table
 create_crypto_asset_table_query = """
 CREATE table crypto_asset(
     id INT(64) NOT NULL AUTO_INCREMENT,
     crypto_id VARCHAR(255),
     crypto_name VARCHAR(255),
-    current_price NUMERIC(30,2),
-    total_volume_24h NUMERIC(30,2),
-    market_cap NUMERIC(30, 2),
+    current_price NUMERIC(30,2) NULL DEFAULT NULL,
+    total_volume_24h NUMERIC(30,2) NULL DEFAULT NULL,
+    market_cap NUMERIC(30,2) NULL DEFAULT NULL,
     last_update VARCHAR(255),
     created_on DATETIME NOT NULL DEFAULT NOW(),
     PRIMARY KEY (id)
@@ -44,9 +45,9 @@ CREATE table crypto_asset(
 ## Create another connection
 try:
     with connect(
-        host='localhost',
+        host=MyPASS,
         user='root',
-        password=MyPASS,
+        password="Met/14/7472",
         database = "coingecko_db"
     ) as connection:
         if connection.is_connected():
